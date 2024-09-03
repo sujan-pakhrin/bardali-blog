@@ -83,7 +83,7 @@ export const getUser = (req, res) => {
             res.send(rest);
         }
     });
-};
+}; 
 
 // export const updateUser = (req, res) => {
 //     const { f_name, l_name, address, email, password, phone, gender, dob } = req.body;
