@@ -26,7 +26,7 @@ export const AuthContextProvider = ({ children }) => {
     // console.log(res.data.role);
   };
   const logout = async () => {
-    await axios.post("http://localhost:5000/api/auth/logout");
+    await axios.delete("http://localhost:5000/api/auth");
     setUser(null);
 
     // console.log(res.data.role);
