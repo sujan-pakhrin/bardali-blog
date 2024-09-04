@@ -13,6 +13,7 @@ export const createUser = (req, res) => {
         } else {
             if (data.length > 0) {
                 res.send({
+                    success:false,
                     statuscode: 300,
                     message: "Email already exists!!",
                 });
@@ -27,8 +28,9 @@ export const createUser = (req, res) => {
                         db.query(sql, values, (err, result) => {
                             if (err) return res.send(err);
                             res.send({
+                                success: true,
                                 data: result,
-                                message: "signup sucessfully",
+                                message: "Signup sucessfully",
                             });
                         });
                     }

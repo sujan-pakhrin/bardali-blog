@@ -14,22 +14,22 @@ export const AuthContextProvider = ({ children }) => {
   }
 
   const [user, setUser] = useState(initialUser);
+  console.log(user)
+  // console.log(typeof(user.isAdmin))
 
   const login = async (formData) => {
     const res = await axios.post(
       "http://localhost:5550/api/auth",
       formData
     );
-    // setUser(res.data);
-    console.log(res.data);
+    // console.log(res.data);
+    setUser(res.data);
 
     // console.log(res.data.role);
   };
   const logout = async () => {
     await axios.delete("http://localhost:5550/api/auth");
     setUser(null);
-
-    // console.log(res.data.role);
   };
 
   useEffect(() => {

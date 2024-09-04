@@ -1,9 +1,14 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
+import { AuthContext } from "../../context/AuthContext";
 
 const Navbar = () => {
+    const {user,logout}=useContext(AuthContext)
     const [open, setOpen] = useState(false);
+    const handleLogout=()=>{
+        logout();
+    }
 
     return (
         <div className="flex justify-center  border-b border-[#EAEBF0] bg-white sticky top-0 text-[#272D37] h-[86px]">
@@ -27,7 +32,7 @@ const Navbar = () => {
                         </ul>
                     </div>
 
-                    <div className="flex items-center gap-2">
+                    {!user&&<div className="flex items-center gap-2">
                         <button className="px-[28px] py-[12px] font-semibold text-[15px] leading-[22px] text-[#437EF7] rounded-sm">
                             Sign Up
                         </button>
@@ -35,16 +40,17 @@ const Navbar = () => {
                         <button className="px-[28px] py-[12px] bg-[#437EF7] font-semibold text-[15px] leading-[22px] text-white rounded-sm ">
                             Log In
                         </button>
-                    </div>
-                    <div className="flex gap-2 items-center font-bold text-sm">
-                        <label>First Name</label>
+                    </div>}
+                    {user&&<div className="flex gap-2 items-center font-bold text-sm">
+                        <label>{user.details.f_name}</label>
 
                         <img
-                            src="https://images.unsplash.com/photo-1575936123452-b67c3203c357?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D"
+                            src={`http://localhost:5550/${user.details.profile}`}
                             alt="profile"
                             className="h-[30px] w-[30px] object-cover rounded-[50%]"
                         />
-                    </div>
+                        <button onClick={handleLogout}>Logout</button>
+                    </div>}
                 </div>
                 
             </nav>

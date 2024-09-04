@@ -1,5 +1,8 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -15,28 +18,33 @@ const Register = () => {
     });
     console.log(formData);
     const handleChange = (e) => {
-        // const { name, value } = e.target;
-        // setFormData((prev) => ({ ...prev, [name]: value }));
+        const { name, value } = e.target;
+        setFormData((prev) => ({ ...prev, [name]: value }));
     };
     const handleFileChange = (e) => {
-        // setFormData((prev) => ({ ...prev, image: e.target.files[0] }));
+        setFormData((prev) => ({ ...prev, profile: e.target.files[0] }));
     };
 
     const handleSubmit = async (e) => {
-        // e.preventDefault();
-        // await axios
-        //     .post("http://localhost:8880/api/todo", formData, {
-        //         headers: {
-        //             "Content-Type": "multipart/form-data",
-        //         },
-        //     })
-        //     .then((res) => {
-        //         console.log(res.data);
-        //         // navigate("/");
-        //     })
-        //     .catch((err) => {
-        //         console.log(err);
-        //     });
+        e.preventDefault();
+        await axios
+            .post("http://localhost:5550/api/user", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            })
+            .then((res) => {
+                // console.log(res.data);
+                if(res.data.success===false){
+                    toast.error(res.data.message)
+                }else{
+                    toast.success(res.data.message)
+                }
+                // navigate("/");
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     };
     return (
         <div className="flex items-center justify-center h-[100vh] bg-[#f3f3f3]">
@@ -121,7 +129,7 @@ const Register = () => {
                         className="border-2 border-[#5c5c5c] outline-none py-3 px-2 w-full rounded-sm text-[14px] leading-[20px] tracking-[-0.28px]"
                     />
                 </div>
-                <div className="flex flex-col w-full">
+                {/* <div className="flex flex-col w-full">
                     <label className="font-medium text-[14px] leading-[20px] tracking-[-0.28px]">
                         Date of Birth
                     </label>
@@ -133,8 +141,8 @@ const Register = () => {
                         value={formData.dob}
                         className="border-2 border-[#5c5c5c] outline-none py-3 px-2 w-full rounded-sm text-[14px] leading-[20px] tracking-[-0.28px]"
                     />
-                </div>
-                <div className="flex flex-col w-full">
+                </div> */}
+                {/* <div className="flex flex-col w-full">
                     <label className="font-medium text-[14px] leading-[20px] tracking-[-0.28px]">
                         Gender
                     </label>
@@ -152,7 +160,7 @@ const Register = () => {
                         <option value="female">Female</option>
                         <option value="other">Other</option>
                     </select>
-                </div>
+                </div> */}
                 <div className="flex flex-col w-full">
                     <label className="font-medium text-[14px] leading-[20px] tracking-[-0.28px]">
                         Upload Profile
@@ -176,7 +184,7 @@ const Register = () => {
                     <span className="font-medium text-[16px] leading-[20px] tracking-[-0.28px] text-green-500">Already have an account?</span>
                     <span className="font-medium text-[16px] leading-[20px] tracking-[-0.28px] underline text-blue-600">Sign In</span>
                 </div>
-                
+                <ToastContainer />
             </div>
         </div>
     );

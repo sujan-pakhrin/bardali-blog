@@ -52,3 +52,8 @@ export const Login = (req, res) => {
         }
     });
 };
+
+export const Logout=(req,res)=>{
+    res.clearCookie("access_token");
+    res.status(200).json({message:"User logged out"});
+}

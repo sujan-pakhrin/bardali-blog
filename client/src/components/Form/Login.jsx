@@ -1,9 +1,12 @@
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 
+
 const Login = () => {
-    const { login } = useContext(AuthContext);
+    const navigate=useNavigate()
+    const {user, login } = useContext(AuthContext);
+    
     const [formData, setFormData] = useState({
         email: "",
         password: "",
@@ -18,6 +21,11 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         login(formData);
+        if(user.isAdmin===0){
+            navigate('/')
+        }else{
+            navigate('/admin')
+        }
     };
     return (
         <div className="flex items-center justify-center h-[100vh] bg-[#f3f3f3]">
@@ -63,6 +71,7 @@ const Login = () => {
                     <span className="font-medium text-[16px] leading-[20px] tracking-[-0.28px] underline text-blue-600">Sign Up</span>
                 </div>
             </div>
+            {/* <ToastContainer /> */}
         </div>
     );
 };
